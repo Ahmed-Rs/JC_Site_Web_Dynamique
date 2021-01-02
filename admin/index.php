@@ -27,28 +27,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Item1</td>
-                            <td>Description 1</td>
-                            <td>Prix 1</td>
-                            <td>Catégorie 1</td>
-                            <td width=300>
-                                <a href="view.php?id=1" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
-                                <a href="update.php?id=1" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
-                                <a href="delete.php?id=1" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Item2</td>
-                            <td>Description 2</td>
-                            <td>Prix 2</td>
-                            <td>Catégorie 2</td>
-                            <td width=300>
-                                <a href="view.php?id=2" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
-                                <a href="update.php?id=2" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
-                                <a href="delete.php?id=2" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
-                            </td>
-                        </tr>
+                        <?php
+                        require 'database.php';
+                        $db = Database::connect();
+                        $statement = $db->query('SELECT items.id, items.name, items.description, items.price, categories.name 
+                                                 AS category 
+                                                 FROM items 
+                                                 LEFT JOIN categories 
+                                                 ON items.category = categories.id
+                                                 ORDER BY items.id DESC');
+
+                        while($item = $statement->fetch()) {
+
+                            echo '<tr>
+                                <td>' . $item['name'] . '</td>
+                                <td>' . $item['description'] . '</td>
+                                <td>' . $item['price'] . ' €</td>
+                                <td>' . $item['category'] . '</td>
+                                <td width=300>
+                                    <a href="view.php?id=' . $item['id'] . '"class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
+                                    <a href="update.php?id=' . $item['id'] . '" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
+                                    <a href="delete.php?id=' . $item['id'] . '" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                                </td>
+                            </tr>';
+
+                        }
+                        
+                        ?>
+
                     </tbody>
                 </table>
             </div>
