@@ -3,7 +3,7 @@ require 'database.php';
 
 if (!empty($_GET['id'])) {
 
-    $id = checkInput($_GET['id']); // VERIFICATION DE SECURITE
+    $id = checkInput($_GET['id']);                  // VERIFICATION DE SECURITE
 }
 
 $db = Database::connect();
@@ -78,11 +78,11 @@ function checkInput ($data) {
                     <div class="thumbnail">
                         <img src='../images/<?= $item['image'] ?>' alt="">
                         <div class="price"><?= number_format((float)$item['price'], 2, '.', '') ?> €</div>
-                            <div class="caption">
-                                <h4><?= $item['name'] ?></h4>
-                                <p><?= $item['description'] ?></p>
-                                <a href="#" class="btn btn-order" role="button"><span class="glyphicon glyphicon-shopping-cart"></span>Commander</a>
-                            </div>
+                        <div class="caption">
+                            <h4><?= $item['name'] ?></h4>
+                            <p><?= $item['description'] ?></p>
+                            <a href="#" class="btn btn-order" role="button"><span class="glyphicon glyphicon-shopping-cart"></span>Commander</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,6 @@ if (!empty($_POST)) {
         $descriptionError = "Ce champs ne doit pas rester vide !";
         $isSuccess = false;
     }
-
     if (empty($price)) {
         $priceError = "Ce champs ne doit pas rester vide !";
         $isSuccess = false;
@@ -31,30 +30,30 @@ if (!empty($_POST)) {
         $categoryError = "Ce champs ne doit pas rester vide !";
         $isSuccess = false;
     }
-    if (empty($image)) {
+    if (empty($image)) {    // Si aucun fichier n'a été téléchargé
         $imageError = "Vous devez ajouter un fichier !";
         $isSuccess = false;
-    } else {
+    } else {    // Si un fichier a été téléchargé
         $isUploadSuccess = true;
         if ($imageExtension != "jpg" && $imageExtension != "png" && $imageExtension != "jpeg" && $imageExtension != "gif") {
 
-            $imageError = "Les fichiers autorisés sont: .jpg, .jpeg, .png, .gif";
+            $imageError = "Les fichiers autorisés sont: .jpg, .jpeg, .png, .gif"; // Vérifier les extensions
             $isUploadSuccess = false;
         }
-        if (file_exists($imagePath)) {
+        if (file_exists($imagePath)) {                                            // Vérifier si le fichier est dejà dans notre base de données
 
             $imageError = "Le fichier existe dejà";
             $isUploadSuccess = false;
         }
-        if ($_FILES['image']['size'] > 500000) {
+        if ($_FILES['image']['size'] > 500000) {                                  // Vérifier la taille de l'image
             
             $imageError = "Le taille du fichier ne doit pas dépasser 500KB";
             $isUploadSuccess = false;
         }
-        if ($isUploadSuccess) {
+        if ($isUploadSuccess) {                                                   // Si toutes les vérifications sont effectuées avec succès
             
             if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {  // On vérifie si l'image n'a pas été transférée du dossier temporaire vers le dossier images définitif.
-                $imageError = "Une téléchargement est survenue";
+                $imageError = "Une erreur de téléchargement est survenue";
                 $isUploadSuccess = false;    
             }
         }
